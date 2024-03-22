@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use OPTIMADE::PropertyDefinitions::Property::Nested;
-use YAML qw( LoadFile );
 
 sub new
 {
@@ -39,7 +38,7 @@ sub yaml()
     my( $self ) = @_;
     return $self->{yaml} if exists $self->{yaml};
 
-    $self->{yaml} = LoadFile $self->parent->parent->path . '/properties/optimade/' . $self->parent->name . '/' . $self->name . '.yaml';
+    $self->{yaml} = $self->parent->parent->yaml( 'properties/optimade/' . $self->parent->name . '/' . $self->name . '.yaml' );
     return $self->{yaml};
 }
 

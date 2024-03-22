@@ -35,7 +35,7 @@ sub _resolve_inherits($$)
     my( $self, $yaml ) = @_;
 
     if( exists $yaml->{'$$inherit'} ) {
-        my $parent = $self->yaml( '..' . $yaml->{'$$inherit'} );
+        my $parent = $self->yaml( '..' . $yaml->{'$$inherit'} . '.yaml' );
         $yaml = { %$parent, %$yaml };
     }
 
