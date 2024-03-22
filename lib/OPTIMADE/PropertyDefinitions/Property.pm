@@ -1,5 +1,8 @@
 package OPTIMADE::PropertyDefinitions::Property;
 
+# ABSTRACT: OPTIMADE Property
+# VERSION
+
 use strict;
 use warnings;
 

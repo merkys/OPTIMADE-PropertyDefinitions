@@ -1,5 +1,8 @@
 package OPTIMADE::PropertyDefinitions;
 
+# ABSTRACT: Top-level Property Definition class
+# VERSION
+
 use strict;
 use warnings;
 

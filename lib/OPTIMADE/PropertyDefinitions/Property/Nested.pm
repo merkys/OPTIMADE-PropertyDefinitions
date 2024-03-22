@@ -1,5 +1,8 @@
 package OPTIMADE::PropertyDefinitions::Property::Nested;
 
+# ABSTRACT: OPTIMADE Nested property
+# VERSION
+
 use strict;
 use warnings;
 

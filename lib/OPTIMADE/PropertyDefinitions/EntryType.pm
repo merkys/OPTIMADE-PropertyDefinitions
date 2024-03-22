@@ -1,5 +1,8 @@
 package OPTIMADE::PropertyDefinitions::EntryType;
 
+# ABSTRACT: OPTIMADE Entry Type
+# VERSION
+
 use strict;
 use warnings;
 
