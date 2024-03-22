@@ -7,7 +7,7 @@ use YAML;
 
 sub new
 {
-    my( $parent, $name ) = @_;
+    my( $class, $parent, $name ) = @_;
     return bless { parent => $parent, name => $name }, $class;
 }
 

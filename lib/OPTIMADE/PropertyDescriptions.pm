@@ -15,7 +15,7 @@ sub entry_types()
 {
     my( $self ) = @_;
     opendir my $dir, $self->path . '/entrytypes/optimade/';
-    my @files = sort grep { /\.yaml$/ } readdir $dir; # TODO: Drop .yaml
+    my @files = sort map { s/\.yaml$//; $_ } grep { /\.yaml$/ } readdir $dir;
     close $dir;
     return map { OPTIMADE::PropertyDescriptions::EntryType->new( $self, $_ ) } @files;
 }

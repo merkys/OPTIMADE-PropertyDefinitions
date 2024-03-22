@@ -4,20 +4,20 @@ use strict;
 use warnings;
 
 use OPTIMADE::PropertyDescriptions::Property;
-use YAML;
+use YAML qw( LoadFile );
 
 sub new
 {
-    my( $parent, $name ) = @_;
+    my( $class, $parent, $name ) = @_;
     return bless { parent => $parent, name => $name }, $class;
 }
 
 sub properties()
 {
     my( $self ) = @_;
-    my $yaml = LoadFile $self->parent . '/' . $self->name . '.yaml';
+    my $yaml = LoadFile $self->parent->path . '/entrytypes/optimade/' . $self->name . '.yaml';
     return map { OPTIMADE::PropertyDescriptions::Property->new( $self, $_ ) }
-               @{$yaml->{properties}};
+               sort keys %{$yaml->{properties}};
 }
 
 sub name() { $_[0]->{name} }
