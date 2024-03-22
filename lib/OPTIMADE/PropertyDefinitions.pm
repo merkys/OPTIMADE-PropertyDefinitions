@@ -4,22 +4,47 @@ use strict;
 use warnings;
 
 use OPTIMADE::PropertyDefinitions::EntryType;
+use YAML qw( LoadFile );
 
 sub new
 {
     my( $class, $path ) = @_;
+    $path .= '/' unless $path =~ /\/$/;
     return bless { path => $path }, $class;
 }
 
 sub entry_types()
 {
     my( $self ) = @_;
-    opendir my $dir, $self->path . '/entrytypes/optimade/';
+    opendir my $dir, $self->path . 'entrytypes/optimade/';
     my @files = sort map { s/\.yaml$//; $_ } grep { /\.yaml$/ } readdir $dir;
     close $dir;
     return map { OPTIMADE::PropertyDefinitions::EntryType->new( $self, $_ ) } @files;
 }
 
 sub path() { $_[0]->{path} }
+
+sub yaml($)
+{
+    my( $self, $path ) = @_;
+    return $self->_resolve_inherits( LoadFile( $self->path . $path ) );
+}
+
+sub _resolve_inherits($$)
+{
+    my( $self, $yaml ) = @_;
+
+    if( exists $yaml->{'$$inherit'} ) {
+        my $parent = $self->yaml( '..' . $yaml->{'$$inherit'} );
+        $yaml = { %$parent, %$yaml };
+    }
+
+    for my $key (keys %$yaml) {
+        next unless ref $yaml->{$key} eq 'HASH';
+        $yaml->{$key} = $self->_resolve_inherits( $yaml->{$key} );
+    }
+
+    return $yaml;
+}
 
 1;
