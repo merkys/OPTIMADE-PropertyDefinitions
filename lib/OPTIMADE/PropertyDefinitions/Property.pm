@@ -15,7 +15,10 @@ sub name() { $_[0]->{name} }
 sub parent() { $_[0]->{parent} }
 
 sub description() { $self->yaml->{description} }
+sub optimade_type() { $self->yaml->{'x-optimade-type'} }
+sub properties() { my @empty }
 sub query_support() { $self->parent->yaml->{'query-support'} }
+sub required() { exists $self->yaml->{required} ? @{$self->yaml->{required}} : my @empty }
 sub response_level() { $self->parent->yaml->{'response-level'} }
 sub sortable() { $self->parent->yaml->{sortable} }
 sub support() { $self->parent->yaml->{support} }
