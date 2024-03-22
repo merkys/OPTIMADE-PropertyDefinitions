@@ -14,8 +14,8 @@ sub new
 sub name() { $_[0]->{name} }
 sub parent() { $_[0]->{parent} }
 
-sub description() { $self->yaml->{description} }
-sub optimade_type() { $self->yaml->{'x-optimade-type'} }
+sub description() { $_[0]->yaml->{description} }
+sub optimade_type() { $_[0]->yaml->{'x-optimade-type'} }
 
 sub properties()
 {
@@ -25,13 +25,13 @@ sub properties()
                sort keys %{$self->yaml->{properties}};
 }
 
-sub query_support() { $self->parent->yaml->{'query-support'} }
-sub required() { exists $self->yaml->{required} ? @{$self->yaml->{required}} : my @empty }
-sub response_level() { $self->parent->yaml->{'response-level'} }
-sub sortable() { $self->parent->yaml->{sortable} }
-sub support() { $self->parent->yaml->{support} }
-sub type() { @{$self->yaml->{type}} }
-sub unit() { $self->yaml->{'x-optimade-unit'} }
+sub query_support() { $_[0]->parent->yaml->{'query-support'} }
+sub required() { exists $_[0]->yaml->{required} ? @{$_[0]->yaml->{required}} : my @empty }
+sub response_level() { $_[0]->parent->yaml->{'response-level'} }
+sub sortable() { $_[0]->parent->yaml->{sortable} }
+sub support() { $_[0]->parent->yaml->{support} }
+sub type() { @{$_[0]->yaml->{type}} }
+sub unit() { $_[0]->yaml->{'x-optimade-unit'} }
 
 sub yaml()
 {

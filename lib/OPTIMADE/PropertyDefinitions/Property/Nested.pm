@@ -3,7 +3,7 @@ package OPTIMADE::PropertyDefinitions::Property::Nested;
 use strict;
 use warnings;
 
-use parent OPTIMADE::PropertyDefinitions::Property;
+use parent OPTIMADE::PropertyDefinitions::Property::;
 
 sub yaml()
 {
