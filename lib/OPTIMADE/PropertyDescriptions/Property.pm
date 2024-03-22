@@ -1,4 +1,4 @@
-package OPTIMADE::PropertyDescriptions::Property;
+package OPTIMADE::PropertyDefinitions::Property;
 
 use strict;
 use warnings;

@@ -1,9 +1,9 @@
-package OPTIMADE::PropertyDescriptions::EntryType;
+package OPTIMADE::PropertyDefinitions::EntryType;
 
 use strict;
 use warnings;
 
-use OPTIMADE::PropertyDescriptions::Property;
+use OPTIMADE::PropertyDefinitions::Property;
 use YAML qw( LoadFile );
 
 sub new
@@ -16,7 +16,7 @@ sub properties()
 {
     my( $self ) = @_;
     my $yaml = LoadFile $self->parent->path . '/entrytypes/optimade/' . $self->name . '.yaml';
-    return map { OPTIMADE::PropertyDescriptions::Property->new( $self, $_ ) }
+    return map { OPTIMADE::PropertyDefinitions::Property->new( $self, $_ ) }
                sort keys %{$yaml->{properties}};
 }
 
