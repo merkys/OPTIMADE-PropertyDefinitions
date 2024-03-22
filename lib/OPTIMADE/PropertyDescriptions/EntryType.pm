@@ -16,8 +16,8 @@ sub properties()
 {
     my( $self ) = @_;
     my $yaml = LoadFile $self->parent . '/' . $self->name . '.yaml';
-    my @property_names; # TODO: Extract
-    return map { OPTIMADE::PropertyDescriptions::Property->new( $self, $_ ) } @property_names;
+    return map { OPTIMADE::PropertyDescriptions::Property->new( $self, $_ ) }
+               @{$yaml->{properties}};
 }
 
 sub name() { $_[0]->{name} }
