@@ -14,8 +14,17 @@ sub new
 sub name() { $_[0]->{name} }
 sub parent() { $_[0]->{parent} }
 
-sub description() { $self->_get( 'description' ) }
-sub type() { @{$self->_get( 'type' )} }
-sub unit() { $self->_get( 'x-optimade-unit ') }
+sub description() { $self->yaml->{description} }
+sub type() { @{$self->yaml->{type}} }
+sub unit() { $self->yaml->{'x-optimade-unit'} }
+
+sub yaml()
+{
+    my( $self ) = @_;
+    return $self->{yaml} if exists $self->{yaml};
+
+    $self->{yaml} = LoadFile $self->parent->parent->path . '/properties/optimade/' . $self->parent->name . '/' . $self->name . '.yaml';
+    return $self->{yaml};
+}
 
 1;
