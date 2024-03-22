@@ -3,6 +3,7 @@ package OPTIMADE::PropertyDefinitions::Property;
 use strict;
 use warnings;
 
+use OPTIMADE::PropertyDefinitions::Property::Nested;
 use YAML qw( LoadFile );
 
 sub new
@@ -16,7 +17,15 @@ sub parent() { $_[0]->{parent} }
 
 sub description() { $self->yaml->{description} }
 sub optimade_type() { $self->yaml->{'x-optimade-type'} }
-sub properties() { exists $self->yaml->{properties} ? @{$self->yaml->{properties}} : my @empty }
+
+sub properties()
+{
+    my( $self ) = @_;
+    return my @empty unless exists $self->yaml->{properties};
+    return map { OPTIMADE::PropertyDefinitions::Property::Nested->new( $self, $_ ) }
+               sort keys %{$self->yaml->{properties}};
+}
+
 sub query_support() { $self->parent->yaml->{'query-support'} }
 sub required() { exists $self->yaml->{required} ? @{$self->yaml->{required}} : my @empty }
 sub response_level() { $self->parent->yaml->{'response-level'} }
