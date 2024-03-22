@@ -9,4 +9,7 @@ sub new
     return bless { parent => $parent, name => $name }, $class;
 }
 
+sub name() { $_[0]->{name} }
+sub parent() { $_[0]->{parent} }
+
 1;
