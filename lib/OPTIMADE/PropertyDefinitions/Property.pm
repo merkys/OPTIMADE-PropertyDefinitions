@@ -15,6 +15,10 @@ sub name() { $_[0]->{name} }
 sub parent() { $_[0]->{parent} }
 
 sub description() { $self->yaml->{description} }
+sub query_support() { $self->parent->yaml->{'query-support'} }
+sub response_level() { $self->parent->yaml->{'response-level'} }
+sub sortable() { $self->parent->yaml->{sortable} }
+sub support() { $self->parent->yaml->{support} }
 sub type() { @{$self->yaml->{type}} }
 sub unit() { $self->yaml->{'x-optimade-unit'} }
 
