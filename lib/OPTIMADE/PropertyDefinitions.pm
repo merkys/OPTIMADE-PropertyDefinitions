@@ -16,6 +16,13 @@ sub new
     return bless { path => $path }, $class;
 }
 
+sub entry_type($)
+{
+    my( $self, $entry_type ) = @_;
+    die "no such entry type '$entry_type'\n" unless -e $self->path . 'entrytypes/optimade/' . $entry_type . '.yaml';
+    return OPTIMADE::PropertyDefinitions::EntryType->new( $self, $entry_type );
+}
+
 sub entry_types()
 {
     my( $self ) = @_;

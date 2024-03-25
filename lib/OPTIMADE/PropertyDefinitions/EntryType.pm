@@ -14,6 +14,13 @@ sub new
     return bless { parent => $parent, name => $name }, $class;
 }
 
+sub property($)
+{
+    my( $self, $property ) = @_;
+    die "no such property '$property'\n" unless exists $self->yaml->{properties}{$property};
+    return OPTIMADE::PropertyDefinitions::Property->new( $self, $property );
+}
+
 sub properties()
 {
     my( $self ) = @_;
