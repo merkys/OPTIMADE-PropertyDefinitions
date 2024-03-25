@@ -20,6 +20,18 @@ sub parent() { $_[0]->{parent} }
 sub description() { $_[0]->yaml->{description} }
 sub optimade_type() { $_[0]->yaml->{'x-optimade-type'} }
 
+sub property($)
+{
+    my( $self, $property ) = @_;
+
+    if( !exists $self->yaml->{properties} ||
+        !exists $self->yaml->{properties}{$property} ) {
+        die "no such property '$property'\n";
+    }
+
+    return OPTIMADE::PropertyDefinitions::Property::Nested->new( $self, $property );
+}
+
 sub properties()
 {
     my( $self ) = @_;
