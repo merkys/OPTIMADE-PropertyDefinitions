@@ -6,6 +6,7 @@ package OPTIMADE::PropertyDefinitions::Property;
 use strict;
 use warnings;
 
+use List::Util qw( any );
 use OPTIMADE::PropertyDefinitions::Property::Nested;
 
 sub new
@@ -47,6 +48,8 @@ sub sortable() { $_[0]->parent->yaml->{sortable} }
 sub support() { $_[0]->parent->yaml->{support} }
 sub type() { @{$_[0]->yaml->{type}} }
 sub unit() { $_[0]->yaml->{'x-optimade-unit'} }
+
+sub is_nullable() { any { $_ eq 'null' } $_[0]->type }
 
 sub yaml()
 {
