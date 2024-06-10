@@ -41,6 +41,7 @@ sub properties()
                sort keys %{$self->yaml->{properties}};
 }
 
+sub format() { $_[0]->yaml->{format} }
 sub query_support() { $_[0]->parent->yaml->{'query-support'} }
 sub required() { exists $_[0]->yaml->{required} ? @{$_[0]->yaml->{required}} : my @empty }
 sub response_level() { $_[0]->parent->yaml->{'response-level'} }
@@ -48,6 +49,7 @@ sub sortable() { $_[0]->parent->yaml->{sortable} }
 sub support() { $_[0]->parent->yaml->{support} }
 sub type() { @{$_[0]->yaml->{type}} }
 sub unit() { $_[0]->yaml->{'x-optimade-unit'} }
+sub version() { $_[0]->yaml->{version} }
 
 sub is_nullable() { any { $_ eq 'null' } $_[0]->type }
 
