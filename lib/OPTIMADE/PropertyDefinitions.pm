@@ -7,6 +7,7 @@ use strict;
 use warnings;
 
 use OPTIMADE::PropertyDefinitions::EntryType;
+use JSON;
 use YAML qw( LoadFile );
 
 sub new
@@ -38,7 +39,16 @@ sub path() { $_[0]->{path} }
 sub raw($)
 {
     my( $self, $path ) = @_;
-    return $self->_resolve_inherits( LoadFile( $self->path . $path . '.yaml' ) );
+    if(      $self->{format} eq 'json' ) {
+        open my $inp, '<', $self->path . $path . '.json';
+        my $json = decode_json join '', <$inp>;
+        close $inp;
+        return $json;
+    } elsif( $self->{format} eq 'yaml' ) {
+        return $self->_resolve_inherits( LoadFile( $self->path . $path . '.yaml' ) );
+    } else {
+        die "no such format '$self->{format}'\n";
+    }
 }
 
 sub _resolve_inherits($$)
