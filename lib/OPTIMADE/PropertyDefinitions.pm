@@ -11,15 +11,16 @@ use YAML qw( LoadFile );
 
 sub new
 {
-    my( $class, $path ) = @_;
+    my( $class, $path, $format ) = @_;
     $path .= '/' unless $path =~ /\/$/;
-    return bless { path => $path }, $class;
+    $format = 'yaml' unless $format;
+    return bless { path => $path, format => $format }, $class;
 }
 
 sub entry_type($)
 {
     my( $self, $entry_type ) = @_;
-    die "no such entry type '$entry_type'\n" unless -e $self->path . 'entrytypes/optimade/' . $entry_type . '.yaml';
+    die "no such entry type '$entry_type'\n" unless -e $self->path . 'entrytypes/optimade/' . $entry_type . '.' . $self->{format};
     return OPTIMADE::PropertyDefinitions::EntryType->new( $self, $entry_type );
 }
 
@@ -27,7 +28,7 @@ sub entry_types()
 {
     my( $self ) = @_;
     opendir my $dir, $self->path . 'entrytypes/optimade/';
-    my @files = sort map { s/\.yaml$//; $_ } grep { /\.yaml$/ } readdir $dir;
+    my @files = sort map { s/\.yaml$//; $_ } grep { /\.yaml$/ } readdir $dir; # FIXME: Adapt to all formats
     close $dir;
     return map { OPTIMADE::PropertyDefinitions::EntryType->new( $self, $_ ) } @files;
 }
