@@ -22,8 +22,8 @@ sub property($)
 {
     my( $self, $property ) = @_;
 
-    if( !exists $self->yaml->{properties} ||
-        !exists $self->yaml->{properties}{$property} ) {
+    if( !exists $self->raw->{properties} ||
+        !exists $self->raw->{properties}{$property} ) {
         die "no such property '$property'\n";
     }
 
@@ -33,32 +33,32 @@ sub property($)
 sub properties()
 {
     my( $self ) = @_;
-    return my @empty unless exists $self->yaml->{properties};
+    return my @empty unless exists $self->raw->{properties};
     return map { OPTIMADE::PropertyDefinitions::Property::Nested->new( $self, $_ ) }
-               sort keys %{$self->yaml->{properties}};
+               sort keys %{$self->raw->{properties}};
 }
 
-sub description() { $_[0]->yaml->{description} }
-sub format() { $_[0]->yaml->{format} }
-sub optimade_type() { $_[0]->yaml->{'x-optimade-type'} }
-sub query_support() { $_[0]->parent->yaml->{'query-support'} }
-sub required() { exists $_[0]->yaml->{required} ? @{$_[0]->yaml->{required}} : my @empty }
-sub response_level() { $_[0]->parent->yaml->{'response-level'} }
-sub sortable() { $_[0]->parent->yaml->{sortable} }
-sub support() { $_[0]->parent->yaml->{support} }
-sub type() { @{$_[0]->yaml->{type}} }
-sub unit() { $_[0]->yaml->{'x-optimade-unit'} }
-sub version() { $_[0]->yaml->{version} }
+sub description() { $_[0]->raw->{description} }
+sub format() { $_[0]->raw->{format} }
+sub optimade_type() { $_[0]->raw->{'x-optimade-type'} }
+sub query_support() { $_[0]->parent->raw->{'query-support'} }
+sub required() { exists $_[0]->raw->{required} ? @{$_[0]->raw->{required}} : my @empty }
+sub response_level() { $_[0]->parent->raw->{'response-level'} }
+sub sortable() { $_[0]->parent->raw->{sortable} }
+sub support() { $_[0]->parent->raw->{support} }
+sub type() { @{$_[0]->raw->{type}} }
+sub unit() { $_[0]->raw->{'x-optimade-unit'} }
+sub version() { $_[0]->raw->{version} }
 
 sub is_nullable() { any { $_ eq 'null' } $_[0]->type }
 
-sub yaml()
+sub raw()
 {
     my( $self ) = @_;
-    return $self->{yaml} if exists $self->{yaml};
+    return $self->{raw} if exists $self->{raw};
 
-    $self->{yaml} = $self->parent->parent->yaml( 'properties/optimade/' . $self->parent->name . '/' . $self->name );
-    return $self->{yaml};
+    $self->{raw} = $self->parent->parent->raw( 'properties/optimade/' . $self->parent->name . '/' . $self->name );
+    return $self->{raw};
 }
 
 1;

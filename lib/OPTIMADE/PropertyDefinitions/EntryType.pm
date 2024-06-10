@@ -17,7 +17,7 @@ sub new
 sub property($)
 {
     my( $self, $property ) = @_;
-    die "no such property '$property'\n" unless exists $self->yaml->{properties}{$property};
+    die "no such property '$property'\n" unless exists $self->raw->{properties}{$property};
     return OPTIMADE::PropertyDefinitions::Property->new( $self, $property );
 }
 
@@ -25,19 +25,19 @@ sub properties()
 {
     my( $self ) = @_;
     return map { OPTIMADE::PropertyDefinitions::Property->new( $self, $_ ) }
-               sort keys %{$self->yaml->{properties}};
+               sort keys %{$self->raw->{properties}};
 }
 
 sub name() { $_[0]->{name} }
 sub parent() { $_[0]->{parent} }
 
-sub yaml()
+sub raw()
 {
     my( $self ) = @_;
-    return $self->{yaml} if exists $self->{yaml};
+    return $self->{raw} if exists $self->{raw};
 
-    $self->{yaml} = $self->parent->yaml( 'entrytypes/optimade/' . $self->name );
-    return $self->{yaml};
+    $self->{raw} = $self->parent->raw( 'entrytypes/optimade/' . $self->name );
+    return $self->{raw};
 }
 
 1;

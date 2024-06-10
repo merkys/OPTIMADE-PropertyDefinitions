@@ -8,13 +8,13 @@ use warnings;
 
 use parent OPTIMADE::PropertyDefinitions::Property::;
 
-sub yaml()
+sub raw()
 {
     my( $self ) = @_;
     if( $self->parent->optimade_type eq 'list' ) {
-        return $self->parent->yaml->{items}{properties}{$self->name};
+        return $self->parent->raw->{items}{properties}{$self->name};
     } else {
-        return $self->parent->yaml->{properties}{$self->name};
+        return $self->parent->raw->{properties}{$self->name};
     }
 }
 
