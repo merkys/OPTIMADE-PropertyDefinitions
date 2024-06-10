@@ -18,9 +18,6 @@ sub new
 sub name() { $_[0]->{name} }
 sub parent() { $_[0]->{parent} }
 
-sub description() { $_[0]->yaml->{description} }
-sub optimade_type() { $_[0]->yaml->{'x-optimade-type'} }
-
 sub property($)
 {
     my( $self, $property ) = @_;
@@ -41,7 +38,9 @@ sub properties()
                sort keys %{$self->yaml->{properties}};
 }
 
+sub description() { $_[0]->yaml->{description} }
 sub format() { $_[0]->yaml->{format} }
+sub optimade_type() { $_[0]->yaml->{'x-optimade-type'} }
 sub query_support() { $_[0]->parent->yaml->{'query-support'} }
 sub required() { exists $_[0]->yaml->{required} ? @{$_[0]->yaml->{required}} : my @empty }
 sub response_level() { $_[0]->parent->yaml->{'response-level'} }
