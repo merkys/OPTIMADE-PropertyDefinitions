@@ -37,7 +37,7 @@ sub path() { $_[0]->{path} }
 sub yaml($)
 {
     my( $self, $path ) = @_;
-    return $self->_resolve_inherits( LoadFile( $self->path . $path ) );
+    return $self->_resolve_inherits( LoadFile( $self->path . $path . '.yaml' ) );
 }
 
 sub _resolve_inherits($$)
@@ -45,7 +45,7 @@ sub _resolve_inherits($$)
     my( $self, $yaml ) = @_;
 
     if( exists $yaml->{'$$inherit'} ) {
-        my $parent = $self->yaml( '..' . $yaml->{'$$inherit'} . '.yaml' );
+        my $parent = $self->yaml( '..' . $yaml->{'$$inherit'} );
         $yaml = { %$parent, %$yaml };
     }
 

@@ -57,7 +57,7 @@ sub yaml()
     my( $self ) = @_;
     return $self->{yaml} if exists $self->{yaml};
 
-    $self->{yaml} = $self->parent->parent->yaml( 'properties/optimade/' . $self->parent->name . '/' . $self->name . '.yaml' );
+    $self->{yaml} = $self->parent->parent->yaml( 'properties/optimade/' . $self->parent->name . '/' . $self->name );
     return $self->{yaml};
 }
 

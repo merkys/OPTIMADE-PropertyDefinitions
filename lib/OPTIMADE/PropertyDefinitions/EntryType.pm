@@ -36,7 +36,7 @@ sub yaml()
     my( $self ) = @_;
     return $self->{yaml} if exists $self->{yaml};
 
-    $self->{yaml} = $self->parent->yaml( 'entrytypes/optimade/' . $self->name . '.yaml' );
+    $self->{yaml} = $self->parent->yaml( 'entrytypes/optimade/' . $self->name );
     return $self->{yaml};
 }
 
