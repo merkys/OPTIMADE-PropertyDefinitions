@@ -29,7 +29,9 @@ sub entry_types()
 {
     my( $self ) = @_;
     opendir my $dir, $self->path . 'entrytypes/optimade/';
-    my @files = sort map { s/\.yaml$//; $_ } grep { /\.yaml$/ } readdir $dir; # FIXME: Adapt to all formats
+    my @files = sort map  { substr( $_,  0, -5 ) }
+                     grep { substr( $_, -5 ) eq '.' . $self->{format} }
+                          readdir $dir;
     close $dir;
     return map { OPTIMADE::PropertyDefinitions::EntryType->new( $self, $_ ) } @files;
 }
