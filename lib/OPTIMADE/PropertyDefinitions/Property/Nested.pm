@@ -11,7 +11,11 @@ use parent OPTIMADE::PropertyDefinitions::Property::;
 sub yaml()
 {
     my( $self ) = @_;
-    return $self->parent->yaml->{properties}{$self->name};    
+    if( $self->parent->optimade_type eq 'list' ) {
+        return $self->parent->yaml->{items}{properties}{$self->name};
+    } else {
+        return $self->parent->yaml->{properties}{$self->name};
+    }
 }
 
 1;

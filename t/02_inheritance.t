@@ -6,7 +6,7 @@ use warnings;
 use OPTIMADE::PropertyDefinitions;
 use Test::More;
 
-plan tests => 2;
+plan tests => 3;
 
 my $pd = OPTIMADE::PropertyDefinitions->new( 'externals/OPTIMADE/schemas/src/defs/v1.2/' );
 
@@ -16,5 +16,5 @@ is $id->optimade_type, 'string', 'simple one-step resolution';
 my $struct_assemblies_sites_in_groups = $pd->entry_type( 'structures' )->property( 'assemblies' )->property( 'sites_in_groups' );
 is $struct_assemblies_sites_in_groups->optimade_type, 'list';
 
-# my $ref_editor_name = $pd->entry_type( 'references' )->property( 'editors' )->property( 'name' );
-# is $ref_editor_name->unit, 'inapplicable';
+my $ref_editor_name = $pd->entry_type( 'references' )->property( 'editors' );
+is $ref_editor_name->unit, 'inapplicable';
